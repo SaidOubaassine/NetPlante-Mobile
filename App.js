@@ -1,20 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import 'react-native-gesture-handler';
+import { combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import { legacy_createStore as createStore} from 'redux';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+import PlanteNavigator from './navigation/planteNavigator';
+import famillesReducer from './store/reducers/familles';
+import plantesReducer from './store/reducers/plantes';
+import planteReducer from './store/reducers/plante';
+
+
+
+const rootReducer = combineReducers({
+familles : famillesReducer,
+plantes: plantesReducer,
+plante: planteReducer
 });
+
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
+
+
+
+export default props => {
+  let [fontsLoaded] = useFonts({
+    "open-sans": require("./assets/Fonts/OpenSans-Regular.ttf"),
+		"open-sans-bold": require("./assets/Fonts/OpenSans-Bold.ttf"),
+		"Roboto-Bold": require("./assets/Fonts/Roboto-Bold.ttf"),
+		"Tangerine-Bold":require("./assets/Fonts/Tangerine-Bold.ttf"),
+		"Oswald-bold": require("./assets/Fonts/Oswald-Bold.ttf")
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+  return (
+  <Provider store={store}>
+    <PlanteNavigator/>
+  </Provider>
+  );
+
+  }
+
+
+
