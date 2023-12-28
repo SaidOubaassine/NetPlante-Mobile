@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Colours from '../constants/Colours';
 import {SearchBar } from "react-native-elements";
-import GridItem from '../components/GridItem';
+import GridItemTest from '../components/GridItemTest';
 import * as plantesActions from '../store/actions/plantes'
 
 
@@ -92,14 +92,15 @@ const Acceuil = (props) => {
   keyExtractor={(item) => item.nomScientifique}
   numColumns={2}
   renderItem={(itemData) => (
-
-        <GridItem 
+    
+        <GridItemTest 
+		
             widthImage={150}
             heightImage={150}
             widthCard={150} 
             height={150} 
             titre={itemData.item.nomScientifique} 
-            image={itemData.item.images[0].imgBytes}  
+            image={itemData.item.images}  
             onSelect={() => {
                 props.navigation.navigate({
                     routeName: "CaracteristiquesScreen",

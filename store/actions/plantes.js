@@ -7,7 +7,7 @@ export const fetchPlantes = (nomFamille) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        'http://192.168.1.109:8080/famille/'+nomFamille+'/plantes'
+        'https://netplantearboretum.herokuapp.com/famille/'+nomFamille+'/plantes'
       );
 
       if (!response.ok) {

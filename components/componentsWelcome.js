@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const ComponentsWelcome=()=>{
 return(
-<View style={styles.container}>
+
 <ImageBackground source={require('../assets/images/back.jpg')} resizeMode="stretch" style={styles.imageBack}>
      <MaterialIcons name="chevron-left" size={25} color="#FA9005" style={styles.chevronleft} />
          <Image
@@ -16,16 +16,13 @@ return(
          <Text style={styles.text1}>Netplant-arboretum</Text>
          <Text style={styles.text2}>les plantes avec les yeux de technologie</Text>
 </ImageBackground>
-</View>
+
 )
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      flex: 1,
-    },
+    
     logo: {
       width: 40,
       height: 40,

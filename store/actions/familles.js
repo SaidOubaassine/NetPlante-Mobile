@@ -6,7 +6,7 @@ export const fetchFamilles = () => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        "http://192.168.1.109:8080/famille"
+        "https://netplantearboretum.herokuapp.com/famille"
       )
 
       

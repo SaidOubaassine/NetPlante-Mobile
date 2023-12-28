@@ -6,12 +6,20 @@ import Colours from "../constants/Colours";
 import {SearchBar } from "react-native-elements";
 import GridItem from '../components/GridItem';
 import * as famillesActions from '../store/actions/familles';
-
-
-
+import ComponentsWelcome from '../components/componentsWelcome';
 
 
 const Acceuil = (props) => {
+	const [showOneTimeScreen, setShowOneTimeScreen] = useState(true);
+	useEffect(() => {
+	if(showOneTimeScreen){
+        setTimeout(() => {
+			props.navigation.setParams({shown:true});
+            setShowOneTimeScreen(false);
+          }, 2500)
+		}
+    });
+  
     const [ isLoading, setIsLoading ] = useState(false);
 	const [ onRefreshing, setOnRefreshing ] = useState(false);
 	const [ error, setError ] = useState(false);
@@ -77,17 +85,24 @@ const Acceuil = (props) => {
 	}
 
   return (
-    <View style={{flex: 1}}>
-        <SearchBar
+<View style={styles.container}>
+{
+	showOneTimeScreen && (
+		<ComponentsWelcome/>
+	)
+}
+{!showOneTimeScreen && ( 
+	<View style={{flex: 1}}>
+	<SearchBar
       placeholder="Chercher les categories"
       lightTheme
       round
     //  value={searchValue}
     //  onChangeText={(text) => searchFunction(text)}
-     // autoCorrect={false}
+      autoCorrect={false}
       style={{height: 25, width: 500, fontSize: 15}}
-    />
-<FlatList
+/>
+   <FlatList
   onRefresh={loadFamilles}
   refreshing={onRefreshing}
   data={familles}
@@ -111,13 +126,32 @@ const Acceuil = (props) => {
               }}
              />
   )}
-  />
-    </View>
-);};
+  /></View> )}
+  </View>
 
 
+);
+};
+
+Acceuil.navigationOptions=(navigationData)=>{
+    const shown = navigationData.navigation.getParam('shown');
+	if(shown){
+    return {
+		headerShown: true,
+	};
+   }else{
+	   
+	return {
+		headerShown: false,
+	};
+}
+}
 
 const styles = StyleSheet.create({
+		container: {
+			justifyContent: 'center',
+			flex: 1,
+		  },
 	centered: {
 		flex: 1,
 		justifyContent: 'center',

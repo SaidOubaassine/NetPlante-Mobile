@@ -1,4 +1,5 @@
 import { Image, View, Text } from "react-native";
+import { useState, useEffect } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Icon } from "react-native-elements/dist/icons/Icon";
 
@@ -39,13 +40,7 @@ const defaultNavOptions = {
 
 const AcceuilStackNavigator = createStackNavigator(
     {
-        WelcomeScreen:
-        {
-            screen: Welcome,
-            navigationOptions: {
-                headerShown: false
-            }
-        },
+  
         AcceuilScreen:
         {
             screen: Acceuil,
@@ -126,6 +121,7 @@ const AcceuilStackNavigator = createStackNavigator(
 )
 
 
+
 const CameraStackNavigator = createStackNavigator({
     CameraScreen: {
       screen: Camera,
@@ -174,13 +170,18 @@ const tabScreenConfig = {
     AcceuilScreenConfig: {
         screen: AcceuilStackNavigator,
         navigationOptions:({navigation})=>{
+        
+              let shown=false
             let routeName = navigation.state.routes[navigation.state.index].routeName
-            if (routeName === 'WelcomeScreen') {
+            if(navigation.state.routes[navigation.state.index].params){
+                      shown=true;
+            }
+            if ((routeName === 'AcceuilScreen' && !shown) || routeName === 'CaracteristiquesScreen') {
               return {
                 tabBarVisible:false,
               };
-            }
-            return {
+            }           
+            return  {
               tabBarVisible: true,
               tabBarIcon: tabInfo => {
                 return (
